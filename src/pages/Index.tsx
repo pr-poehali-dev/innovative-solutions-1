@@ -407,21 +407,20 @@ export default function Index() {
       style={{ background: bgDarker }}>
       <div className="absolute inset-0 z-0" style={{ background: "radial-gradient(ellipse at 50% 75%, rgba(15,55,55,0.30) 0%, transparent 65%)" }} />
 
-      {/* Галерея всех фото — свайп */}
-      <div className="relative z-10 w-full max-w-lg px-6 flex flex-col items-center">
-        <p style={{ ...lbl, marginBottom: 20, textAlign: "center" }}>Style Select</p>
-        <h2 style={{ ...font, color: "#fff", fontSize: "clamp(1.8rem,6vw,3rem)", fontWeight: 400, fontStyle: "italic", lineHeight: 1.2, marginBottom: 24, textAlign: "center" }}>
+      <motion.div initial={{ opacity: 0, y: -20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 1 }}
+        className="relative z-10 text-center px-6 max-w-sm">
+        <p style={{ ...lbl, marginBottom: 28 }}>Style Select</p>
+        <h2 style={{ ...font, color: "#fff", fontSize: "clamp(2.4rem,9vw,4.2rem)", fontWeight: 400, fontStyle: "italic", lineHeight: 1.15, marginBottom: 28 }}>
           Спасибо<br />за участие
         </h2>
-
-        {/* Сетка фото 3x3 со свайпом */}
-        <FinalGallery images={ALL_PHOTOS} onOpen={(i) => setLightbox({ images: ALL_PHOTOS, index: i })} />
-
-        <div style={{ border: "1px solid rgba(196,162,74,0.25)", background: "rgba(196,162,74,0.04)", padding: "14px 32px", display: "inline-block", marginTop: 20 }}>
-          <p style={{ ...lbl, marginBottom: 6 }}>при поддержке</p>
-          <p style={{ ...font, color: "#fff", fontSize: "1.1rem", fontWeight: 400, letterSpacing: "0.06em" }}>Семья Dezzer</p>
+        <p style={{ color: "rgba(255,255,255,0.42)", fontWeight: 300, fontSize: "0.85rem", lineHeight: 1.9, marginBottom: 36 }}>
+          Каждый образ — это история.<br />Каждый голос — это мнение, которое важно.
+        </p>
+        <div style={{ border: "1px solid rgba(196,162,74,0.25)", background: "rgba(196,162,74,0.04)", padding: "18px 36px", display: "inline-block" }}>
+          <p style={{ ...lbl, marginBottom: 8 }}>при поддержке</p>
+          <p style={{ ...font, color: "#fff", fontSize: "1.2rem", fontWeight: 400, letterSpacing: "0.06em" }}>Семья Dezzer</p>
         </div>
-      </div>
+      </motion.div>
     </div>,
   ];
 
