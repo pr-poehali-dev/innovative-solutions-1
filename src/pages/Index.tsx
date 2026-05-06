@@ -308,7 +308,7 @@ export default function Index() {
         <div className="border px-8 py-5" style={{ borderColor: "rgba(201,168,76,0.3)", background: "rgba(201,168,76,0.05)" }}>
           <p className="text-xs uppercase tracking-[0.3em] mb-2" style={{ color: "var(--gold)", opacity: 0.7 }}>Создано с любовью</p>
           <p className="text-lg font-light tracking-wide" style={{ color: "#fff", fontFamily: "Cormorant Garamond" }}>
-            Семья ✦
+            Семья Dezzer ✦
           </p>
         </div>
       </motion.div>
