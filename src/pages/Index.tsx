@@ -186,11 +186,11 @@ export default function Index() {
       <motion.div initial={{ opacity: 0, y: 32 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 1.1, delay: 0.2 }}
         className="relative z-10 text-center px-6 max-w-2xl">
         <p style={{ ...labelStyle, marginBottom: 24 }}>Интерактивное голосование</p>
-        <h1 style={{ ...font, color: "#fff", fontSize: "clamp(3.5rem,14vw,7rem)", fontWeight: 400, fontStyle: "italic", lineHeight: 1, marginBottom: 8 }}>
-          Образ
+        <h1 style={{ ...font, color: "#fff", fontSize: "clamp(3rem,13vw,6.5rem)", fontWeight: 400, lineHeight: 1, marginBottom: 8 }}>
+          Style
         </h1>
         <h2 style={{ ...font, color: "var(--gold-light, #ddc06e)", fontSize: "clamp(2rem,8vw,4rem)", fontWeight: 400, letterSpacing: "0.12em", marginBottom: 32 }}>
-          & Страна
+          Select
         </h2>
         <div className="w-14 h-px mx-auto mb-7" style={{ background: "var(--gold)" }} />
         <p style={{ color: "rgba(255,255,255,0.55)", fontSize: "0.875rem", fontWeight: 300, lineHeight: 1.8, letterSpacing: "0.02em" }}>
@@ -313,7 +313,7 @@ export default function Index() {
         className="relative z-10 text-center px-6 max-w-xl">
         <div className="flex items-center justify-center gap-4 mb-8">
           <div className="h-px" style={{ width: 48, background: "var(--gold)", opacity: 0.4 }} />
-          <Icon name="Star" size={14} style={{ color: "var(--gold)" }} />
+          <div style={{ width: 5, height: 5, borderRadius: "50%", background: "var(--gold)", opacity: 0.6 }} />
           <div className="h-px" style={{ width: 48, background: "var(--gold)", opacity: 0.4 }} />
         </div>
         <h2 style={{ ...font, color: "#fff", fontSize: "clamp(2.5rem,9vw,4.5rem)", fontWeight: 400, fontStyle: "italic", lineHeight: 1.2, marginBottom: 24 }}>
@@ -324,8 +324,8 @@ export default function Index() {
           Каждый образ — это история.<br />Каждый голос — это мнение, которое важно.
         </p>
         <div className="inline-block px-8 py-5" style={{ border: "1px solid rgba(196,162,74,0.28)", background: "rgba(196,162,74,0.04)" }}>
-          <p style={{ ...labelStyle, marginBottom: 8 }}>Создано с любовью</p>
-          <p style={{ ...font, color: "#fff", fontSize: "1.25rem", fontWeight: 400, letterSpacing: "0.08em" }}>Семья Dezzer ✦</p>
+          <p style={{ ...labelStyle, marginBottom: 8 }}>При поддержке</p>
+          <p style={{ ...font, color: "#fff", fontSize: "1.25rem", fontWeight: 400, letterSpacing: "0.08em" }}>Семья Dezzer</p>
         </div>
       </motion.div>
     </div>,
