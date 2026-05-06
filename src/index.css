@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Montserrat:wght@300;400;500;600&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400;1,500&family=DM+Sans:wght@300;400;500&display=swap");
 
 @tailwind base;
 @tailwind components;
@@ -6,44 +6,36 @@
 
 @layer base {
   :root {
-    --background: 222 47% 6%;
-    --foreground: 45 30% 90%;
-
-    --card: 220 40% 8%;
-    --card-foreground: 45 30% 90%;
-
-    --popover: 220 40% 8%;
-    --popover-foreground: 45 30% 90%;
-
-    --primary: 45 60% 55%;
-    --primary-foreground: 222 47% 6%;
-
-    --secondary: 220 30% 12%;
-    --secondary-foreground: 45 30% 90%;
-
-    --muted: 220 30% 12%;
-    --muted-foreground: 215 20% 55%;
-
-    --accent: 45 60% 55%;
-    --accent-foreground: 222 47% 6%;
-
+    --background: 222 60% 3%;
+    --foreground: 45 30% 88%;
+    --card: 220 50% 5%;
+    --card-foreground: 45 30% 88%;
+    --popover: 220 50% 5%;
+    --popover-foreground: 45 30% 88%;
+    --primary: 45 60% 52%;
+    --primary-foreground: 222 60% 3%;
+    --secondary: 220 40% 8%;
+    --secondary-foreground: 45 30% 88%;
+    --muted: 220 40% 8%;
+    --muted-foreground: 215 20% 50%;
+    --accent: 45 60% 52%;
+    --accent-foreground: 222 60% 3%;
     --destructive: 0 62.8% 30.6%;
     --destructive-foreground: 210 40% 98%;
-
-    --border: 220 20% 18%;
-    --input: 220 20% 18%;
-    --ring: 45 60% 55%;
-
+    --border: 220 25% 10%;
+    --input: 220 25% 10%;
+    --ring: 45 60% 52%;
     --radius: 0.25rem;
 
-    /* Brand colors */
-    --ocean: #0a1628;
-    --ocean-mid: #0d2137;
-    --teal: #1a6b6b;
-    --teal-light: #2a9090;
-    --gold: #c9a84c;
-    --gold-light: #e8c97a;
-    --marble-teal: #5fb8b8;
+    --ocean: #02060d;
+    --ocean-mid: #040c18;
+    --teal: #124f4f;
+    --teal-light: #1b7070;
+    --gold: #c4a24a;
+    --gold-light: #ddc06e;
+    --marble1: #3a9999;
+    --marble2: #257070;
+    --marble3: #134545;
   }
 }
 
@@ -54,137 +46,151 @@
 
   body {
     @apply bg-background text-foreground;
-    font-family: "Montserrat", system-ui, sans-serif;
+    font-family: "DM Sans", system-ui, sans-serif;
     background-color: var(--ocean);
     overflow-x: hidden;
   }
 
   h1,
   h2,
-  h3 {
-    font-family: "Cormorant Garamond", serif;
+  h3,
+  h4 {
+    font-family: "Playfair Display", Georgia, serif;
   }
 }
 
-/* Marble texture overlay */
+/* ── Мрамор верх ── */
 .marble-top::before {
   content: "";
   position: absolute;
   top: 0;
   left: 0;
   right: 0;
-  height: 40%;
+  height: 42%;
   background: linear-gradient(
     180deg,
-    rgba(95, 184, 184, 0.25) 0%,
-    rgba(26, 107, 107, 0.15) 40%,
+    rgba(58, 153, 153, 0.38) 0%,
+    rgba(37, 112, 112, 0.22) 30%,
+    rgba(19, 69, 69, 0.1) 60%,
     transparent 100%
   );
   pointer-events: none;
-  z-index: 1;
+  z-index: 2;
 }
-
 .marble-top::after {
   content: "";
   position: absolute;
   top: 0;
   left: 0;
   right: 0;
-  height: 35%;
+  height: 38%;
   background:
     repeating-linear-gradient(
-      125deg,
+      118deg,
       transparent,
-      transparent 30px,
-      rgba(95, 184, 184, 0.05) 30px,
-      rgba(95, 184, 184, 0.05) 31px
+      transparent 26px,
+      rgba(58, 153, 153, 0.09) 26px,
+      rgba(58, 153, 153, 0.09) 27px
     ),
     repeating-linear-gradient(
-      55deg,
+      52deg,
       transparent,
-      transparent 50px,
-      rgba(42, 144, 144, 0.04) 50px,
-      rgba(42, 144, 144, 0.04) 51px
+      transparent 46px,
+      rgba(37, 112, 112, 0.06) 46px,
+      rgba(37, 112, 112, 0.06) 47px
+    ),
+    repeating-linear-gradient(
+      165deg,
+      transparent,
+      transparent 68px,
+      rgba(27, 112, 112, 0.05) 68px,
+      rgba(27, 112, 112, 0.05) 69px
     );
   pointer-events: none;
-  z-index: 1;
+  z-index: 2;
 }
 
+/* ── Мрамор низ ── */
 .marble-bottom::before {
   content: "";
   position: absolute;
   bottom: 0;
   left: 0;
   right: 0;
-  height: 40%;
+  height: 42%;
   background: linear-gradient(
     0deg,
-    rgba(95, 184, 184, 0.25) 0%,
-    rgba(26, 107, 107, 0.15) 40%,
+    rgba(58, 153, 153, 0.38) 0%,
+    rgba(37, 112, 112, 0.22) 30%,
+    rgba(19, 69, 69, 0.1) 60%,
     transparent 100%
   );
   pointer-events: none;
-  z-index: 1;
+  z-index: 2;
+}
+.marble-bottom::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 38%;
+  background:
+    repeating-linear-gradient(
+      118deg,
+      transparent,
+      transparent 26px,
+      rgba(58, 153, 153, 0.09) 26px,
+      rgba(58, 153, 153, 0.09) 27px
+    ),
+    repeating-linear-gradient(
+      52deg,
+      transparent,
+      transparent 46px,
+      rgba(37, 112, 112, 0.06) 46px,
+      rgba(37, 112, 112, 0.06) 47px
+    );
+  pointer-events: none;
+  z-index: 2;
 }
 
+/* ── Мрамор бока ── */
 .marble-sides::before {
   content: "";
   position: absolute;
   top: 0;
   left: 0;
   bottom: 0;
-  width: 15%;
+  width: 13%;
   background: linear-gradient(
     90deg,
-    rgba(95, 184, 184, 0.15) 0%,
+    rgba(58, 153, 153, 0.22) 0%,
+    rgba(37, 112, 112, 0.1) 55%,
     transparent 100%
   );
   pointer-events: none;
-  z-index: 1;
+  z-index: 2;
 }
-
 .marble-sides::after {
   content: "";
   position: absolute;
   top: 0;
   right: 0;
   bottom: 0;
-  width: 15%;
+  width: 13%;
   background: linear-gradient(
     270deg,
-    rgba(95, 184, 184, 0.15) 0%,
+    rgba(58, 153, 153, 0.22) 0%,
+    rgba(37, 112, 112, 0.1) 55%,
     transparent 100%
   );
   pointer-events: none;
-  z-index: 1;
+  z-index: 2;
 }
 
 .gold-text {
   color: var(--gold);
 }
-
 .gold-border {
   border-color: var(--gold);
-}
-
-/* Slide scrolling */
-.slide-container {
-  scroll-snap-type: y mandatory;
-  overflow-y: scroll;
-  height: 100vh;
-}
-
-.slide {
-  scroll-snap-align: start;
-  height: 100vh;
-  position: relative;
-}
-
-/* Hide scrollbar */
-.slide-container::-webkit-scrollbar {
-  display: none;
-}
-.slide-container {
-  -ms-overflow-style: none;
-  scrollbar-width: none;
 }
