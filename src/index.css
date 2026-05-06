@@ -28,11 +28,13 @@
     --radius: 0.25rem;
 
     --ocean: #020810;
-    --ocean-mid: #04101e;
-    --teal: #124f4f;
-    --teal-light: #1b7070;
     --gold: #c4a24a;
     --gold-light: #ddc06e;
+
+    /* Текстуры мрамора */
+    --marble-teal-url: url("https://cdn.poehali.dev/projects/a197df66-adff-4ab1-ba15-029c7f21ad43/files/46154f43-7b3d-4399-bd58-19bd0e225ab4.jpg");
+    --marble-agate-top-url: url("https://cdn.poehali.dev/projects/a197df66-adff-4ab1-ba15-029c7f21ad43/files/a2e9dc15-5130-41f6-a079-78393f861e9c.jpg");
+    --marble-agate-bottom-url: url("https://cdn.poehali.dev/projects/a197df66-adff-4ab1-ba15-029c7f21ad43/files/2da2b620-a88a-4a22-93cb-752b6ac33dea.jpg");
   }
 }
 
@@ -56,169 +58,93 @@
   }
 }
 
-/* ═══════════════════════════════
-   МРАМОР — реалистичный SVG-фильтр
-   ═══════════════════════════════ */
-
-/* Скрытый SVG с фильтром турбулентности */
-.marble-filter-defs {
-  position: absolute;
-  width: 0;
-  height: 0;
-  overflow: hidden;
-}
-
-/* ── Верхний мрамор ── */
+/* Мрамор верх — агат с золотым краем поверх бирюзовой текстуры */
 .marble-top {
   position: relative;
 }
 .marble-top::before {
   content: "";
   position: absolute;
-  inset: 0;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 45%;
   pointer-events: none;
-  z-index: 2;
-  background:
-    /* прожилки — диагональные волны разной толщины */
-    repeating-linear-gradient(
-      112deg,
-      transparent 0px,
-      transparent 18px,
-      rgba(72, 180, 180, 0.13) 18px,
-      rgba(72, 180, 180, 0.13) 19px,
-      transparent 19px,
-      transparent 34px,
-      rgba(42, 140, 140, 0.08) 34px,
-      rgba(42, 140, 140, 0.08) 35px,
-      transparent 35px,
-      transparent 58px,
-      rgba(90, 200, 200, 0.1) 58px,
-      rgba(90, 200, 200, 0.1) 60px,
-      transparent 60px,
-      transparent 88px,
-      rgba(30, 110, 110, 0.07) 88px,
-      rgba(30, 110, 110, 0.07) 89px
-    ),
-    repeating-linear-gradient(
-      148deg,
-      transparent 0px,
-      transparent 40px,
-      rgba(80, 190, 190, 0.07) 40px,
-      rgba(80, 190, 190, 0.07) 41px,
-      transparent 41px,
-      transparent 75px,
-      rgba(50, 160, 160, 0.05) 75px,
-      rgba(50, 160, 160, 0.05) 76px
-    );
-  /* Градиент-маска: видно только сверху */
+  z-index: 3;
+  background-image: var(--marble-agate-top-url);
+  background-size: cover;
+  background-position: top center;
   -webkit-mask-image: linear-gradient(
     to bottom,
     black 0%,
-    black 25%,
-    rgba(0, 0, 0, 0.6) 45%,
-    transparent 70%
+    black 40%,
+    rgba(0, 0, 0, 0.5) 65%,
+    transparent 100%
   );
   mask-image: linear-gradient(
     to bottom,
     black 0%,
-    black 25%,
-    rgba(0, 0, 0, 0.6) 45%,
-    transparent 70%
+    black 40%,
+    rgba(0, 0, 0, 0.5) 65%,
+    transparent 100%
   );
 }
 .marble-top::after {
   content: "";
   position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 55%;
+  inset: 0;
   pointer-events: none;
-  z-index: 1;
-  background: linear-gradient(
-    180deg,
-    rgba(60, 160, 160, 0.32) 0%,
-    rgba(40, 120, 120, 0.2) 20%,
-    rgba(20, 80, 80, 0.1) 50%,
-    transparent 100%
-  );
+  z-index: 2;
+  background-image: var(--marble-teal-url);
+  background-size: cover;
+  background-position: center;
+  opacity: 0.18;
 }
 
-/* ── Нижний мрамор ── */
+/* Мрамор низ */
 .marble-bottom {
   position: relative;
 }
 .marble-bottom::before {
   content: "";
   position: absolute;
-  inset: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 45%;
   pointer-events: none;
-  z-index: 2;
-  background:
-    repeating-linear-gradient(
-      68deg,
-      transparent 0px,
-      transparent 22px,
-      rgba(72, 180, 180, 0.12) 22px,
-      rgba(72, 180, 180, 0.12) 23px,
-      transparent 23px,
-      transparent 45px,
-      rgba(42, 140, 140, 0.08) 45px,
-      rgba(42, 140, 140, 0.08) 46px,
-      transparent 46px,
-      transparent 70px,
-      rgba(90, 200, 200, 0.09) 70px,
-      rgba(90, 200, 200, 0.09) 72px,
-      transparent 72px,
-      transparent 100px,
-      rgba(30, 110, 110, 0.06) 100px,
-      rgba(30, 110, 110, 0.06) 101px
-    ),
-    repeating-linear-gradient(
-      130deg,
-      transparent 0px,
-      transparent 55px,
-      rgba(80, 190, 190, 0.06) 55px,
-      rgba(80, 190, 190, 0.06) 56px,
-      transparent 56px,
-      transparent 90px,
-      rgba(50, 160, 160, 0.05) 90px,
-      rgba(50, 160, 160, 0.05) 91px
-    );
+  z-index: 3;
+  background-image: var(--marble-agate-bottom-url);
+  background-size: cover;
+  background-position: bottom center;
   -webkit-mask-image: linear-gradient(
     to top,
     black 0%,
-    black 25%,
-    rgba(0, 0, 0, 0.6) 45%,
-    transparent 70%
+    black 40%,
+    rgba(0, 0, 0, 0.5) 65%,
+    transparent 100%
   );
   mask-image: linear-gradient(
     to top,
     black 0%,
-    black 25%,
-    rgba(0, 0, 0, 0.6) 45%,
-    transparent 70%
+    black 40%,
+    rgba(0, 0, 0, 0.5) 65%,
+    transparent 100%
   );
 }
 .marble-bottom::after {
   content: "";
   position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  height: 55%;
+  inset: 0;
   pointer-events: none;
-  z-index: 1;
-  background: linear-gradient(
-    0deg,
-    rgba(60, 160, 160, 0.32) 0%,
-    rgba(40, 120, 120, 0.2) 20%,
-    rgba(20, 80, 80, 0.1) 50%,
-    transparent 100%
-  );
+  z-index: 2;
+  background-image: var(--marble-teal-url);
+  background-size: cover;
+  background-position: center;
+  opacity: 0.18;
 }
 
-/* ── Боковой мрамор ── */
+/* Мрамор бока — бирюзовая текстура по краям */
 .marble-sides {
   position: relative;
 }
@@ -228,45 +154,30 @@
   inset: 0;
   pointer-events: none;
   z-index: 2;
-  background: repeating-linear-gradient(
-    102deg,
-    transparent 0px,
-    transparent 20px,
-    rgba(72, 180, 180, 0.11) 20px,
-    rgba(72, 180, 180, 0.11) 21px,
-    transparent 21px,
-    transparent 42px,
-    rgba(42, 140, 140, 0.07) 42px,
-    rgba(42, 140, 140, 0.07) 43px,
-    transparent 43px,
-    transparent 68px,
-    rgba(90, 200, 200, 0.08) 68px,
-    rgba(90, 200, 200, 0.08) 70px,
-    transparent 70px,
-    transparent 96px,
-    rgba(30, 110, 110, 0.06) 96px,
-    rgba(30, 110, 110, 0.06) 97px
-  );
+  background-image: var(--marble-teal-url);
+  background-size: cover;
+  background-position: center;
+  opacity: 0.14;
   -webkit-mask-image: linear-gradient(
     to right,
     black 0%,
-    rgba(0, 0, 0, 0.7) 8%,
-    rgba(0, 0, 0, 0.2) 20%,
-    transparent 38%,
-    transparent 62%,
-    rgba(0, 0, 0, 0.2) 80%,
-    rgba(0, 0, 0, 0.7) 92%,
+    rgba(0, 0, 0, 0.8) 6%,
+    rgba(0, 0, 0, 0.2) 18%,
+    transparent 32%,
+    transparent 68%,
+    rgba(0, 0, 0, 0.2) 82%,
+    rgba(0, 0, 0, 0.8) 94%,
     black 100%
   );
   mask-image: linear-gradient(
     to right,
     black 0%,
-    rgba(0, 0, 0, 0.7) 8%,
-    rgba(0, 0, 0, 0.2) 20%,
-    transparent 38%,
-    transparent 62%,
-    rgba(0, 0, 0, 0.2) 80%,
-    rgba(0, 0, 0, 0.7) 92%,
+    rgba(0, 0, 0, 0.8) 6%,
+    rgba(0, 0, 0, 0.2) 18%,
+    transparent 32%,
+    transparent 68%,
+    rgba(0, 0, 0, 0.2) 82%,
+    rgba(0, 0, 0, 0.8) 94%,
     black 100%
   );
 }
@@ -278,12 +189,12 @@
   z-index: 1;
   background: linear-gradient(
     90deg,
-    rgba(55, 150, 150, 0.28) 0%,
-    rgba(35, 110, 110, 0.14) 12%,
-    transparent 30%,
-    transparent 70%,
-    rgba(35, 110, 110, 0.14) 88%,
-    rgba(55, 150, 150, 0.28) 100%
+    rgba(30, 100, 100, 0.35) 0%,
+    rgba(20, 70, 70, 0.15) 15%,
+    transparent 32%,
+    transparent 68%,
+    rgba(20, 70, 70, 0.15) 85%,
+    rgba(30, 100, 100, 0.35) 100%
   );
 }
 
