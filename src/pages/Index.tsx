@@ -71,7 +71,8 @@ function PhotoGallery({ images, onOpen }: { images: string[]; onOpen?: (i: numbe
   const [active, setActive] = useState(0);
   const [imgDir, setImgDir] = useState(1);
   const isAnim = useRef(false);
-  const touchStartX = useRef<number | null>(null);
+  const dragStart = useRef<number | null>(null);
+  const isDragging = useRef(false);
 
   const goImg = useCallback((next: number) => {
     if (isAnim.current) return;
@@ -82,13 +83,18 @@ function PhotoGallery({ images, onOpen }: { images: string[]; onOpen?: (i: numbe
     setTimeout(() => { isAnim.current = false; }, 420);
   }, [active, images.length]);
 
-  const onTouchStartX = (e: React.TouchEvent) => { touchStartX.current = e.touches[0].clientX; };
-  const onTouchEndX = (e: React.TouchEvent) => {
-    if (touchStartX.current === null) return;
-    const diff = touchStartX.current - e.changedTouches[0].clientX;
-    if (Math.abs(diff) > 40) { if (diff > 0) { goImg(active + 1); } else { goImg(active - 1); } }
-    touchStartX.current = null;
+  const onDragStart = (clientX: number) => { dragStart.current = clientX; isDragging.current = false; };
+  const onDragEnd = (clientX: number) => {
+    if (dragStart.current === null) return;
+    const diff = dragStart.current - clientX;
+    if (Math.abs(diff) > 40) { isDragging.current = true; if (diff > 0) { goImg(active + 1); } else { goImg(active - 1); } }
+    dragStart.current = null;
   };
+
+  const onTouchStartX = (e: React.TouchEvent) => onDragStart(e.touches[0].clientX);
+  const onTouchEndX = (e: React.TouchEvent) => onDragEnd(e.changedTouches[0].clientX);
+  const onMouseDown = (e: React.MouseEvent) => onDragStart(e.clientX);
+  const onMouseUp = (e: React.MouseEvent) => onDragEnd(e.clientX);
 
   const imgVariants = {
     enter: (d: number) => ({ x: d > 0 ? "100%" : "-100%", opacity: 0 }),
@@ -97,8 +103,9 @@ function PhotoGallery({ images, onOpen }: { images: string[]; onOpen?: (i: numbe
   };
 
   return (
-    <div className="relative w-full h-full overflow-hidden select-none"
-      onTouchStart={onTouchStartX} onTouchEnd={onTouchEndX}>
+    <div className="relative w-full h-full overflow-hidden select-none cursor-grab active:cursor-grabbing"
+      onTouchStart={onTouchStartX} onTouchEnd={onTouchEndX}
+      onMouseDown={onMouseDown} onMouseUp={onMouseUp}>
       <AnimatePresence custom={imgDir} mode="wait">
         <motion.img
           key={active}
@@ -121,7 +128,7 @@ function PhotoGallery({ images, onOpen }: { images: string[]; onOpen?: (i: numbe
 
       {/* Кнопка fullscreen */}
       {onOpen && (
-        <button onClick={(e) => { e.stopPropagation(); onOpen(active); }}
+        <button onClick={(e) => { e.stopPropagation(); if (!isDragging.current) onOpen(active); }}
           className="absolute top-2 right-2 z-20 w-7 h-7 flex items-center justify-center rounded-full opacity-50 hover:opacity-90 transition-opacity"
           style={{ background: "rgba(2,6,13,0.7)", border: "1px solid rgba(196,162,74,0.3)" }}>
           <Icon name="Maximize2" size={11} style={{ color: "var(--gold)" }} />
@@ -143,19 +150,22 @@ function PhotoGallery({ images, onOpen }: { images: string[]; onOpen?: (i: numbe
 // Лайтбокс для просмотра на весь экран
 function Lightbox({ images, startIndex, onClose }: { images: string[]; startIndex: number; onClose: () => void }) {
   const [active, setActive] = useState(startIndex);
-  const touchStartX = useRef<number | null>(null);
+  const dragStartX = useRef<number | null>(null);
 
   const go = (next: number) => {
     setActive(Math.max(0, Math.min(images.length - 1, next)));
   };
 
-  const onTouchStartX = (e: React.TouchEvent) => { touchStartX.current = e.touches[0].clientX; };
-  const onTouchEndX = (e: React.TouchEvent) => {
-    if (touchStartX.current === null) return;
-    const diff = touchStartX.current - e.changedTouches[0].clientX;
+  const onDragStart = (clientX: number) => { dragStartX.current = clientX; };
+  const onDragEnd = (clientX: number) => {
+    if (dragStartX.current === null) return;
+    const diff = dragStartX.current - clientX;
     if (Math.abs(diff) > 40) { if (diff > 0) { go(active + 1); } else { go(active - 1); } }
-    touchStartX.current = null;
+    dragStartX.current = null;
   };
+
+  const onTouchStartX = (e: React.TouchEvent) => onDragStart(e.touches[0].clientX);
+  const onTouchEndX = (e: React.TouchEvent) => onDragEnd(e.changedTouches[0].clientX);
 
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
@@ -169,9 +179,10 @@ function Lightbox({ images, startIndex, onClose }: { images: string[]; startInde
 
   return (
     <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
-      className="fixed inset-0 z-[100] flex items-center justify-center"
+      className="fixed inset-0 z-[100] flex items-center justify-center cursor-grab active:cursor-grabbing"
       style={{ background: "rgba(2,6,13,0.97)" }}
-      onTouchStart={onTouchStartX} onTouchEnd={onTouchEndX}>
+      onTouchStart={onTouchStartX} onTouchEnd={onTouchEndX}
+      onMouseDown={(e) => onDragStart(e.clientX)} onMouseUp={(e) => onDragEnd(e.clientX)}>
       <AnimatePresence mode="wait">
         <motion.img key={active} src={images[active]} alt=""
           initial={{ opacity: 0, scale: 0.96 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0 }}
@@ -223,6 +234,7 @@ export default function Index() {
   const [lightbox, setLightbox] = useState<{ images: string[]; index: number } | null>(null);
   const isAnimating = useRef(false);
   const touchStart = useRef<number | null>(null);
+  const mouseStart = useRef<number | null>(null);
 
   useEffect(() => {
     fetch(VOTES_URL)
@@ -253,6 +265,24 @@ export default function Index() {
     if (Math.abs(diff) > 55) { if (diff > 0) { goNext(); } else { goPrev(); } }
     touchStart.current = null;
   };
+
+  const onMouseDown = (e: React.MouseEvent) => { mouseStart.current = e.clientY; };
+  const onMouseUp = (e: React.MouseEvent) => {
+    if (mouseStart.current === null) return;
+    const diff = mouseStart.current - e.clientY;
+    if (Math.abs(diff) > 55) { if (diff > 0) { goNext(); } else { goPrev(); } }
+    mouseStart.current = null;
+  };
+
+  useEffect(() => {
+    const onWheel = (e: WheelEvent) => {
+      e.preventDefault();
+      if (e.deltaY > 30) goNext();
+      else if (e.deltaY < -30) goPrev();
+    };
+    window.addEventListener("wheel", onWheel, { passive: false });
+    return () => window.removeEventListener("wheel", onWheel);
+  }, [goNext, goPrev]);
 
   const handleVote = async (idx: number) => {
     if (voted !== null) return;
@@ -425,7 +455,9 @@ export default function Index() {
   ];
 
   return (
-    <div className="fixed inset-0 overflow-hidden" onTouchStart={onTouchStart} onTouchEnd={onTouchEnd}
+    <div className="fixed inset-0 overflow-hidden cursor-grab active:cursor-grabbing"
+      onTouchStart={onTouchStart} onTouchEnd={onTouchEnd}
+      onMouseDown={onMouseDown} onMouseUp={onMouseUp}
       style={{ background: "var(--ocean)" }}>
       <AnimatePresence custom={direction} mode="wait">
         <motion.div key={current} custom={direction} variants={slideVariants} initial="enter" animate="center" exit="exit"
